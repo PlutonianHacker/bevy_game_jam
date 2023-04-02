@@ -2,7 +2,7 @@
 name = "bevy_game" # ToDo
 version = "0.1.0"
 publish = false
-authors = ["Niklas Eicker <git@nikl.me>"] # ToDo: you are the author ;)
+authors = ["Edmond Van Wingerden", "Luke Van Wingerden"]
 edition = "2021"
 exclude = ["dist", "build", "assets", "credits"]
 
@@ -34,19 +34,13 @@ default = [
     "bevy/bevy_scene",
     "bevy/bevy_winit",
     "bevy/bevy_core_pipeline",
-    "bevy/bevy_pbr",
-    "bevy/bevy_gltf",
     "bevy/bevy_render",
     "bevy/bevy_sprite",
     "bevy/bevy_text",
     "bevy/bevy_ui",
     "bevy/png",
-    "bevy/hdr",
-    "bevy/zstd",
     "bevy/x11",
-    "bevy/ktx2",
     "bevy/filesystem_watcher",
-    "bevy/tonemapping_luts"
 ]
 
 [dependencies]
