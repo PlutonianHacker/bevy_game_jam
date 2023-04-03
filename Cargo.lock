@@ -503,6 +503,8 @@ dependencies = [
  "embed-resource",
  "image",
  "rand",
+ "serde",
+ "serde_json",
  "winit",
 ]
 
