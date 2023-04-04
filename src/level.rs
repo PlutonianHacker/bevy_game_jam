@@ -2,7 +2,11 @@ use bevy::{prelude::*, utils::HashMap};
 use serde::Deserialize;
 use serde_json::Value;
 
-use crate::{loader::JsonFile, GameState};
+use crate::{
+    loader::JsonFile,
+    physics::{Collider, Solid},
+    GameState,
+};
 
 /// A tiled map.
 #[derive(Deserialize)]
@@ -181,9 +185,6 @@ pub fn spawn_map(
 ) {
     info!("Spawning level");
 
-    // TODO: remove this
-    commands.spawn(Camera2dBundle::default());
-
     let path = &current.0.map;
     let handle: Handle<JsonFile> = asset_server.get_handle(path);
     let json = json_data
@@ -277,6 +278,14 @@ pub fn spawn_map(
 
                         commands.spawn((
                             Tile,
+                            Solid,
+                            Collider {
+                                // TODO: variable sized?
+                                size: Vec2::new(
+                                    tileset.tile_width as f32,
+                                    tileset.tile_height as f32,
+                                ),
+                            },
                             SpriteSheetBundle {
                                 texture_atlas: texture_atlas_handle.clone(),
                                 transform: Transform::from_xyz(x, y, 100.),
