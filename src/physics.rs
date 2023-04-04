@@ -33,7 +33,7 @@ pub struct Collider {
 }
 
 fn apply_gravity(mut actors: Query<&mut Velocity, With<Actor>>) {
-    for mut velocity in &mut actors {
+    for mut _velocity in &mut actors {
         
         //velocity.y = (velocity.y - 1.0);//.max(-32.0);
     }

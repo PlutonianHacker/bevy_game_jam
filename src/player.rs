@@ -1,13 +1,17 @@
 use bevy::prelude::*;
 
-use crate::{GameState, physics::{Actor, Collider}};
+use crate::{
+    physics::{Actor, Collider},
+    GameState,
+};
 
 pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_system(spawn_player.in_schedule(OnEnter(GameState::Playing)))
-            .add_system(handle_input.in_set(OnUpdate(GameState::Playing)));
+            .add_system(handle_input.in_set(OnUpdate(GameState::Playing)))
+            .add_system(despawn_player.in_schedule(OnExit(GameState::Playing)));
     }
 }
 
@@ -67,7 +71,10 @@ fn spawn_player(mut commands: Commands) {
     });
 }
 
-pub(crate) fn handle_input(input: Res<Input<KeyCode>>, mut player: Query<&mut Velocity, With<Player>>) {
+pub(crate) fn handle_input(
+    input: Res<Input<KeyCode>>,
+    mut player: Query<&mut Velocity, With<Player>>,
+) {
     let mut velocity = player.single_mut();
 
     if input.pressed(KeyCode::A) {
@@ -78,7 +85,6 @@ pub(crate) fn handle_input(input: Res<Input<KeyCode>>, mut player: Query<&mut Ve
         velocity.x = 0.0;
     }
 
-    
     if input.pressed(KeyCode::W) {
         velocity.y = (velocity.y + 1.0).min(32.0);
     } else if input.pressed(KeyCode::S) {
@@ -87,4 +93,11 @@ pub(crate) fn handle_input(input: Res<Input<KeyCode>>, mut player: Query<&mut Ve
         velocity.y = 0.0;
     }
     //println!("({}, {})", velocity.x, velocity.y);
+}
+
+fn despawn_player(mut commands: Commands, player: Query<Entity, With<Player>>) {
+    let player = player.single();
+
+    // using despawn_recursive just in case we ever give the player `Childern`
+    commands.entity(player).despawn_recursive();
 }

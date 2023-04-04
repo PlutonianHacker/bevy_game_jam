@@ -1,0 +1,11 @@
+[
+  {
+    "name": "Test Level 0",
+    "map": "levels/test_level.json",
+    "next": "Test Level 1"
+  },
+  {
+    "name": "Test Level 1",
+    "map": "levels/test_level-1.json"
+  }
+]
